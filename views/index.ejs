@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>BKB Placemat</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+                
+        <script>
+            function timer(stunde, minute, sekunde, message){
+                var now = new Date()                        
+                var audio = new Audio('notify.mp3')            
+                var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), stunde, minute, sekunde, 0) - now
+                if (millisTill10 < 0) {
+                    millisTill10 += 86400000
+                }
+                setTimeout(function(){audio.play();}, millisTill10)            
+                setTimeout(function(){alert(message);}, millisTill10)
+            }
+            timer("<%= endeUhrzeitNachdenken.getHours() %>","<%= endeUhrzeitNachdenken.getMinutes() %>","<%= endeUhrzeitNachdenken.getSeconds() %>","Nachdenken ist jetzt vorbei ...")
+            timer("<%= endeUhrzeitVergleichen.getHours() %>","<%= endeUhrzeitVergleichen.getMinutes() %>","<%= endeUhrzeitVergleichen.getSeconds() %>","Vergleichen ist jetzt vorbei ...")
+            timer("<%= endeUhrzeitKonsens.getHours() %>","<%= endeUhrzeitKonsens.getMinutes() %>","<%= endeUhrzeitKonsens.getSeconds() %>","Konsens ist jetzt vorbei ...")
+        </script>
+    </head>
+    <body>
+        <section>                                
+            <h2 class="full-width-borders"><img src="/images/placemat.png"/>BKB Placemat</h2>                       
+            
+            <% for(var i=0; i < anzeigen.length; i++) {%>
+                <p><%- anzeigen[i] %></p><hr>                    
+            <% } %>                   
+        
+            <form action="" method="POST" <% if (anzeigen.length == 1){%>style="display: none" <%}  %>>            
+                <p></p>
+                <input type="text" name="tbxName" id="tbxName" placeholder="Mein Name ...">                                        
+                <button id="btnButton">Beitreten</button>
+            </form>
+            <p>&copy; GW11</p>         
+        </section>        
+    </body>
+</html>
